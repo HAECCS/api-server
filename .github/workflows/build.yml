@@ -1,0 +1,31 @@
+name: Fill Secrets and Trigger Jenkins
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  prepare-and-trigger-jenkins:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Fill secrets in application.yaml
+        run: |
+          sed -i "s|\${MYSQL_URL}|${{ secrets.MYSQL_URL }}|g" src/main/resources/application.yaml
+          sed -i "s|\${USERNAME}|${{ secrets.USERNAME }}|g" src/main/resources/application.yaml
+          sed -i "s|\${PASSWORD}|${{ secrets.PASSWORD }}|g" src/main/resources/application.yaml
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "Fill secrets" || echo "No changes to commit"
+          git push
+
+      - name: Trigger Jenkins
+        uses: jenkinsci/jenkins-github-action@v1.0
+        with:
+          jenkins_url: ${{ secrets.JENKINS_URL }}
+          job: "api-server"
+          username: ${{ secrets.JENKINS_USERNAME }}
+          token: ${{ secrets.JENKINS_TOKEN }}
