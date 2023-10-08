@@ -15,7 +15,13 @@ jobs:
       - name: Fill secrets in application.yaml get secret
         run: |
           echo "${{ secrets.GH_PAT }}"
-          
+          sed -i "s|\${MYSQL_URL}|${{ secrets.MYSQL_URL }}|g" src/main/resources/application.yaml
+          sed -i "s|\${USERNAME}|${{ secrets.USERNAME }}|g" src/main/resources/application.yaml
+          sed -i "s|\${PASSWORD}|${{ secrets.PASSWORD }}|g" src/main/resources/application.yaml
+          git config --local user.email "etkl8888@naver.com"
+          git config --local user.name "seonghoJoo"
+          git commit -am "Fill secrets" || echo "No changes to commit"
+          git push
 
       - name: Trigger Jenkins with job token let's build
         run: |
