@@ -12,7 +12,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Fill secrets in application.yaml
+      - name: Fill secrets in application.yaml get secret
         run: |
           sed -i "s|\${MYSQL_URL}|${{ secrets.MYSQL_URL }}|g" src/main/resources/application.yaml
           sed -i "s|\${USERNAME}|${{ secrets.USERNAME }}|g" src/main/resources/application.yaml
@@ -22,7 +22,7 @@ jobs:
           git commit -am "Fill secrets" || echo "No changes to commit"
           git push https://${{ secrets.GH_PAT }}@github.com/HAECCS/api-server.git
 
-      - name: Trigger Jenkins with job token let' build
+      - name: Trigger Jenkins with job token let's build
         run: |
           curl -X POST "${{ secrets.JENKINS_URL }}/jenkins/job/api-server/build?token=${{ secrets.JENKINS_JOB_TOKEN }}" \
           --user ${{ secrets.JENKINS_USERNAME }}:${{ secrets.JENKINS_TOKEN }}
