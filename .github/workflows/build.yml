@@ -22,7 +22,7 @@ jobs:
           git commit -am "Fill secrets" || echo "No changes to commit"
           git push
 
-      - name: Trigger Jenkins
+      - name: Trigger Jenkins with job token
         run: |
           curl -X POST "${{ secrets.JENKINS_URL }}/jenkins/job/api-server/build?token=${{ secrets.JENKINS_JOB_TOKEN }}" \
           --user ${{ secrets.JENKINS_USERNAME }}:${{ secrets.JENKINS_TOKEN }}
