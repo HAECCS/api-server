@@ -23,9 +23,6 @@ jobs:
           git push
 
       - name: Trigger Jenkins
-        uses: jenkinsci/jenkins-github-action@v1.0
-        with:
-          jenkins_url: ${{ secrets.JENKINS_URL }}
-          job: "api-server"
-          username: ${{ secrets.JENKINS_USERNAME }}
-          token: ${{ secrets.JENKINS_TOKEN }}
+        run: |
+          curl -X POST "${{ secrets.JENKINS_URL }}/jenkins/job/api-server/build?token=${{ secrets.JENKINS_JOB_TOKEN }}" \
+          --user ${{ secrets.JENKINS_USERNAME }}:${{ secrets.JENKINS_TOKEN }}
