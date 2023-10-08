@@ -14,6 +14,7 @@ jobs:
 
       - name: Fill secrets in application.yaml get secret
         run: |
+          echo "${{ secrets.GH_PAT }}"
           sed -i "s|\${MYSQL_URL}|${{ secrets.MYSQL_URL }}|g" src/main/resources/application.yaml
           sed -i "s|\${USERNAME}|${{ secrets.USERNAME }}|g" src/main/resources/application.yaml
           sed -i "s|\${PASSWORD}|${{ secrets.PASSWORD }}|g" src/main/resources/application.yaml
