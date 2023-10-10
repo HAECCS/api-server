@@ -1,4 +1,4 @@
 [submodule "api-server-config"]
 	path = api-server-config
-	url = https://github.com/HAECCS/api-server-config
+	url = git@github.com:HAECCS/api-server-config.git
 	branch = main
