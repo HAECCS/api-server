@@ -17,7 +17,6 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
-	querydsl.extendsFrom compileClasspath
 }
 
 
@@ -46,3 +45,28 @@ dependencies {
 tasks.named('test'){
 	useJUnitPlatform()
 }
+
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+	jpa = true
+	querydslSourcesDir = querydslDir
+}
+
+sourceSets {
+	main.java.srcDir querydslDir
+}
+
+configurations {
+	querydsl.extendsFrom compileClasspath
+}
+
+compileQuerydsl {
+	options.annotationProcessorPath = configurations.querydsl
+}
+
+def generated = 'src/main/generated'
+clean.doLast {
+	delete(generated)
+}
+
