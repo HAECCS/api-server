@@ -57,3 +57,7 @@ configurations { // 이놈
 compileQuerydsl { // 이놈
 	options.annotationProcessorPath = configurations.querydsl
 }
+
+clean.doLast {
+	delete(querydslDir)
+}
