@@ -10,4 +10,7 @@ class AirportApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+	void test(){
+	}
 }
