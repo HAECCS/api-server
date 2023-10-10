@@ -47,7 +47,7 @@ tasks.named('test'){
 	useJUnitPlatform()
 }
 
-def querydslDir = '$buildDir/generated/querydsl'
+def querydslDir = 'src/main/generated'
 
 querydsl {
 	jpa = true
@@ -67,6 +67,9 @@ compileQuerydsl {
 }
 
 clean.doLast {
-	delete file('src/main/generated')
+	delete file(querydslDir)
+}
+tasks.withType(JavaCompile){
+	options.getGeneratedSourceOutputDirectory().set(file(querydslDir))
 }
 
