@@ -67,6 +67,6 @@ compileQuerydsl {
 }
 
 clean.doLast {
-	delete(querydslDir)
+	delete file('src/main/generated')
 }
 
