@@ -5,7 +5,9 @@ plugins {
 }
 
 group = 'com.prac'
-version = '0.0.1-SNAPSHOT'
+
+def buildTime = new Date().format("yyyyMMddHHmmss")
+version = '1.0.'+ buildTime + '-SNAPSHOT'
 
 java {
 	sourceCompatibility = '17'
